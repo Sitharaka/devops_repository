@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    image: devops-backend:latest
+    restart: always
+    ports:
+      - "3001:3000"
+    environment:
+      - MONGO_URI=mongodb+srv://Admin:RJPTG25fUYFpyJpA@cluster0.zunewah.mongodb.net/devops  # Use your Atlas URI here; change DB name if needed
+
+  frontend:
+    build: ./frontend
+    image: devops-frontend:latest
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
