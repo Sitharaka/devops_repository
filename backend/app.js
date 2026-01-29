@@ -33,10 +33,11 @@ app.use("/tasks", task_router);
 
 //Adding connection to mongodb. Specify a database name for clarity
 const PORT = process.env.PORT || 5000;
-mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/devops")
+const mongoUrl = process.env.MONGO_URL || process.env.MONGO_URI || "mongodb://localhost:27017/devops";
+mongoose.connect(mongoUrl)
 .then(()=>console.log("Connected to mongoDB"))
 .then(()=>{
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 })
 .catch((err) => {
     console.error("MongoDB connection failed:", err.message);
