@@ -32,14 +32,14 @@ pipeline {
         stage('Test') {
             steps {
                 // Add your test commands here, e.g.:
-                sh 'docker-compose -f docker-compose.yaml up -d'
+                sh 'docker compose -f docker-compose.yaml up -d'
                 // Optionally run API/UI tests here
                 // sleep time for services to be up
                 sh 'sleep 10'
                 // Example: curl health check (customize as needed)
                 sh 'curl -f http://localhost:5000 || exit 1'
                 sh 'curl -f http://localhost:3000 || exit 1'
-                sh 'docker-compose -f docker-compose.yaml down'
+                sh 'docker compose -f docker-compose.yaml down'
             }
         }
         stage('Push Images') {
@@ -57,7 +57,7 @@ pipeline {
     }
     post {
         always {
-            sh 'docker-compose -f docker-compose.yaml down || true'
+            sh 'docker compose -f docker-compose.yaml down || true'
         }
     }
 }
