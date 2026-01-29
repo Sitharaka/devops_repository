@@ -3,9 +3,11 @@ import './App.css';
 import TaskManagerTable from './Components/TaskManagerTable/TaskManagerTable';
 import SignIn from './Components/Sign/SignIn';
 import SignUp from './Components/Sign/SignUp';
+import { AuthProvider } from './AuthContext';
 
 function App() {
   return (
+   <AuthProvider>
    <BrowserRouter>
    <Routes>
     <Route path="/" element={<TaskManagerTable/>}></Route>
@@ -13,6 +15,7 @@ function App() {
     <Route path="/SignUp" element={<SignUp/>}></Route>
    </Routes>
    </BrowserRouter>
+   </AuthProvider>
   );
 }
 

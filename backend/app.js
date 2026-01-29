@@ -1,28 +1,44 @@
+//Test.
+console.log("hello, world. Test two.");
+
 const express = require("express");
 const mongoose = require("mongoose");
 const user_router = require("./Route/userRoute");
 const task_router = require("./Route/taskRoute");
 
-// Create app in Express
+//Creating app in express.
 const app = express();
 app.use(express.json()); // Parse incoming JSON
 
-// Routes
+// Simple request logger for debugging
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  next();
+});
+
+// Simple CORS for development
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  if (req.method === 'OPTIONS') return res.sendStatus(200);
+  next();
+});
+
+// Use routes
 app.use("/users", user_router);
+
+// Protect task routes (authentication is applied inside taskRoute)
 app.use("/tasks", task_router);
 
-// MongoDB connection using env var
-const mongoURI = process.env.MONGO_URI || "mongodb+srv://Admin:RJPTG25fUYFpyJpA@cluster0.zunewah.mongodb.net/devops";
-const port = process.env.PORT || 3000;
-
-mongoose.connect(mongoURI)
-  .then(() => {
-    console.log("Connected to MongoDB");
-    app.listen(port, () => {
-      console.log(`Server running on port ${port}`);
-    });
-  })
-  .catch((err) => {
+//Adding connection to mongodb. Specify a database name for clarity
+const PORT = process.env.PORT || 5000;
+mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/devops")
+.then(()=>console.log("Connected to mongoDB"))
+.then(()=>{
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+})
+.catch((err) => {
     console.error("MongoDB connection failed:", err.message);
-    process.exit(1); // Exit if connection fails
   });
+
