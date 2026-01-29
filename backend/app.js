@@ -1,3 +1,5 @@
+// Health check endpoint for CI/CD
+app.get('/health', (req, res) => res.send('OK'));
 //Test.
 console.log("hello, world. Test two.");
 
