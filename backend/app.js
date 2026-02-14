@@ -1,7 +1,3 @@
-// Health check endpoint for CI/CD
-app.get('/health', (req, res) => res.send('OK'));
-//Test.
-console.log("hello, world. Test two.");
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -12,6 +8,11 @@ const task_router = require("./Route/taskRoute");
 const app = express();
 app.use(express.json()); // Parse incoming JSON
 
+// Health check endpoint for CI/CD
+app.get('/health', (req, res) => res.send('OK'));
+
+//Test.
+console.log("hello, world. Test two.");
 // Simple request logger for debugging
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
