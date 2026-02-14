@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         // Set these as Jenkins credentials or replace with your Docker Hub username/repo
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
-    DOCKERHUB_USER = 'sitharaka26'
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
+        DOCKERHUB_USER = 'sitharaka'
         BACKEND_IMAGE = "${DOCKERHUB_USER}/devops-backend"
         FRONTEND_IMAGE = "${DOCKERHUB_USER}/devops-frontend"
     }
