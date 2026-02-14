@@ -31,7 +31,9 @@ pipeline {
         }
         stage('Test') {
             steps {
-                // Clean up any old containers before starting new ones
+                // Force remove any old backend container
+                sh 'docker rm -f backend || true'
+                // Clean up any Compose containers
                 sh 'docker compose -f docker-compose.yaml down || true'
                 // Start fresh containers
                 sh 'docker compose -f docker-compose.yaml up -d'
