@@ -31,7 +31,9 @@ pipeline {
         }
         stage('Test') {
             steps {
-                // Add your test commands here, e.g.:
+                // Clean up any old containers before starting new ones
+                sh 'docker compose -f docker-compose.yaml down || true'
+                // Start fresh containers
                 sh 'docker compose -f docker-compose.yaml up -d'
                 // Optionally run API/UI tests here
                 // sleep time for services to be up
