@@ -47,11 +47,18 @@ pipeline {
                 sh 'docker compose -f docker-compose.yaml down'
             }
         }
+        stage('Debug Branch Name') {
+            steps {
+                script {
+                    echo "Jenkins env.BRANCH_NAME is: ${env.BRANCH_NAME}"
+                }
+            }
+        }
         stage('Push Images') {
             when {
-                anyOf {
-                    branch 'main'
-                    branch 'origin/main'
+                expression {
+                    def b = env.BRANCH_NAME?.toLowerCase()
+                    return b == 'main' || b == 'origin/main' || b == 'refs/heads/main' || b == 'refs/remotes/origin/main'
                 }
             }
             steps {
